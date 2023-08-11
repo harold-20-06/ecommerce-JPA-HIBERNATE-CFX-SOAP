@@ -1,11 +1,14 @@
 package com.spectrum.ecommerce.repository;
 
+import com.spectrum.ecommerce.model.Pedido;
 import com.spectrum.ecommerce.model.Usuario;
 import com.spectrum.ecommerce.utilities.BaseDatos;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
+import org.hibernate.Hibernate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +78,11 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         try (EntityManager entity = BaseDatos.getEntityManagerFactory().createEntityManager()) {
             Query query = entity.createQuery("SELECT u FROM Usuario u");
             listaUsuarios = query.getResultList();
+
+            for (Usuario usuario : listaUsuarios) {
+                usuario.getPedidos().size(); // Carga la colección de pedidos
+            }
+
         } catch (Exception e) {
             listaUsuarios = new ArrayList<>();
             e.printStackTrace();
@@ -122,4 +130,5 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
             throw new RuntimeException("Error al buscar usuarios por criterio: " + e.getMessage(), e);
         }
     }
+
 }

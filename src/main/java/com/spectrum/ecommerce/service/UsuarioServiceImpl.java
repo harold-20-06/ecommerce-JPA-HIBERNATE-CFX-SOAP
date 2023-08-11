@@ -3,6 +3,7 @@ package com.spectrum.ecommerce.service;
 import com.spectrum.ecommerce.model.Usuario;
 import com.spectrum.ecommerce.repository.UsuarioRepository;
 import com.spectrum.ecommerce.repository.UsuarioRepositoryImpl;
+import org.hibernate.Hibernate;
 
 import java.util.List;
 import java.util.UUID;
@@ -37,7 +38,9 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     @Override
     public List<Usuario> getAllUsuario() {
+
         List<Usuario> usuarios = usuarioRepository.getAllUsuario();
+
         return usuarios;
     }
 

@@ -40,7 +40,7 @@ public class UsuarioServiceImpl implements UsuarioService{
     public List<Usuario> getAllUsuario() {
 
         List<Usuario> usuarios = usuarioRepository.getAllUsuario();
-
+        System.out.println("service "+usuarios.size());
         return usuarios;
     }
 

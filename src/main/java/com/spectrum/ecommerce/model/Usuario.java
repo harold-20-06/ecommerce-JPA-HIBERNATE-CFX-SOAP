@@ -33,8 +33,8 @@ public class Usuario {
     private String email;
 
 
-    @OneToMany(mappedBy = "usuario",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Pedido> pedidos = new ArrayList<>();
+//    @OneToMany(mappedBy = "usuario",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    private List<Pedido> pedidos = new ArrayList<>();
 
 
     public Usuario(String nombre, String apellido1, String apellido2, String email) {

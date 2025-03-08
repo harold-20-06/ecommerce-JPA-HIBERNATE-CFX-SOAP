@@ -31,7 +31,6 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         }
         return esExitoso;
     }
-
     @Override
     public boolean updateUsuario(Usuario usuario) {
         boolean esExitoso = false;
@@ -75,15 +74,16 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
     public List<Usuario> getAllUsuario() {
         List<Usuario> listaUsuarios;
 
-        try (EntityManager entity = BaseDatos.getEntityManagerFactory().createEntityManager()) {
+          try (EntityManager entity = BaseDatos.getEntityManagerFactory().createEntityManager()) {
             Query query = entity.createQuery("SELECT u FROM Usuario u");
             listaUsuarios = query.getResultList();
-
-            for (Usuario usuario : listaUsuarios) {
-                usuario.getPedidos().size(); // Carga la colección de pedidos
-            }
+            System.out.println("Usuarios en el repositorio: " + listaUsuarios.size());
+            //for (Usuario usuario : listaUsuarios) {
+            //    usuario.getPedidos().size(); // Carga la colección de pedidos
+            //}
 
         } catch (Exception e) {
+            System.out.println("Error en repository");
             listaUsuarios = new ArrayList<>();
             e.printStackTrace();
         }

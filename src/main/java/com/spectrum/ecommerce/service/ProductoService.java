@@ -12,8 +12,8 @@ public interface ProductoService {
     boolean updateProducto(Producto producto);
     boolean deleteProducto(UUID id);
     List<Producto> getAllProducto();
-    Usuario getProductoById(UUID id);
-    List<Usuario> getProductoByCriterio(String criterio, Object valor);
+    Producto getProductoById(UUID id);
+    List<Producto> getProductoByCriterio(String criterio, Object valor);
 
     boolean validarCorreo(String correo);
 

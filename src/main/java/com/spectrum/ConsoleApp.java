@@ -352,81 +352,73 @@ public class ConsoleApp {
         try {
             System.out.println("Ingrese el nombre: ");
             String nombre = scanner.nextLine();
-            System.out.println("Ingrese el apellido1: ");
-            String apellido1 = scanner.nextLine();
-            System.out.println("Ingrese el apellido2: ");
-            String apellido2 = scanner.nextLine();
-            System.out.println("Ingrese email: ");
-            String email = scanner.nextLine();
 
-            Usuario usuario = new Usuario(apellido1, apellido2, email,nombre);
-            System.out.println(usuario);
-            boolean esExitoso = usuarioService.insertUsuario(usuario);
+            System.out.println("Ingrese el precio: ");
+            String precio = scanner.nextLine();
+
+
+            Producto producto = new Producto(nombre, precio);
+            boolean esExitoso = productoService.insertProducto(producto);
             if (esExitoso) {
-                System.out.println("Usuario creado exitosamente");
+                System.out.println("Producto creado exitosamente");
             } else {
-                System.out.println("Error al crear el usuario");
+                System.out.println("Error al crear el producto");
             }
-        } catch (Exception e) {
-            System.out.println("Ocurrió un error durante la creación del usuario: " + e.getMessage());
+        } catch (Exception e) { // Fin del bloque try
+            System.out.println("Ocurrió un error durante la creación del producto: " + e.getMessage());
             e.printStackTrace();
+
         }
     }
 
     private static void updateProduct() {
-        System.out.println("------- Actualizar Usuario -------");
+        System.out.println("------- Actualizar Producto -------");
 
         try {
-            System.out.println("Ingrese el ID del usuario a actualizar: ");
+            System.out.println("Ingrese el ID del producto a actualizar: ");
             String idString = scanner.nextLine();
             UUID id = UUID.fromString(idString);
-            Usuario usuarioActualizar = usuarioService.getUsuarioById(id);
+            Producto productoActualizar = productoService.getProductoById(id);
             System.out.println("Ingrese el nuevo nombre: ");
             String nuevoNombre = scanner.nextLine();
-            System.out.println("Ingrese el nuevo apellido1: ");
-            String nuevoApellido1 = scanner.next();
-            System.out.println("Ingrese el nueva apellido2: ");
-            String nuevoApellido2 = scanner.next();
-            System.out.println("Ingrese el nuevo email: ");
-            String nuevoEmail = scanner.next();
+            System.out.println("Ingrese el nuevo precio: ");
+            String nuevoPrecio = scanner.next();
 
-            Usuario usuarioActualizado = new Usuario(nuevoNombre, nuevoApellido1, nuevoApellido2,nuevoEmail);
-            usuarioActualizado.setId(id);
-            System.out.println("Anterior "+usuarioActualizar);
-            System.out.println("Actual "+usuarioActualizado);
-            boolean esExitoso = usuarioService.updateUsuario(usuarioActualizado);
+            Producto productoActualizado = new Producto(nuevoNombre, nuevoPrecio);
+            productoActualizado.setId(id);
+            System.out.println("Anterior "+productoActualizar);
+            System.out.println("Actual "+productoActualizado);
+            boolean esExitoso = productoService.updateProducto(productoActualizado);
             if (esExitoso) {
-                System.out.println("Usuario actualizado exitosamente");
+                System.out.println("Producto actualizado exitosamente");
             } else {
-                System.out.println("Error al actualizar el usuario");
+                System.out.println("Error al actualizar el producto");
             }
         } catch (Exception e) {
-            System.out.println("Ocurrió un error durante la actualización del usuario: " + e.getMessage());
+            System.out.println("Ocurrió un error durante la actualización del producto: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
     private static void deleteProduct() {
-        System.out.println("------- Eliminar Usuario -------");
+        System.out.println("------- Eliminar Producto -------");
         try {
-            System.out.println("Ingrese el ID del usuario a eliminar: ");
+            System.out.println("Ingrese el ID del producto a eliminar: ");
             String idString = scanner.nextLine();
             UUID id = UUID.fromString(idString);
 
-            System.out.println(usuarioService.getUsuarioById(id));
-            boolean esExitoso = usuarioService.deleteUsuario(id);
+            System.out.println(productoService.getProductoById(id));
+            boolean esExitoso = productoService.deleteProducto(id);
             if (esExitoso) {
-                System.out.println("Usuario eliminado exitosamente");
+                System.out.println("Producto eliminado exitosamente");
             } else {
-                System.out.println("Error al eliminar el usuario");
+                System.out.println("Error al eliminar el producto");
             }
         } catch (Exception e) {
-            System.out.println("Ocurrió un error durante la eliminación del usuario: " + e.getMessage());
+            System.out.println("Ocurrió un error durante la eliminación del producto: " + e.getMessage());
             e.printStackTrace();
         }
     }
-
-
     private static void getAllProduct() {
         System.out.println("------- Lista de productos -------");
         try {
@@ -449,9 +441,7 @@ public class ConsoleApp {
             System.out.println("------- Menú Buscar por Criterio -------");
             System.out.println("1. Buscar por id");
             System.out.println("2. Buscar por nombre");
-            System.out.println("3. Buscar por apellido1");
-            System.out.println("4. Buscar por apellido2");
-            System.out.println("5. Buscar por correo");
+            System.out.println("3. Buscar por precio");
             System.out.println("0. Salir");
             System.out.println("-----------------------------");
             int option = getOptionFromUser();
@@ -466,8 +456,8 @@ public class ConsoleApp {
 
                         try {
                             UUID id = UUID.fromString(idString);
-                            List<Usuario> usuarioId = usuarioService.getUsuarioByCriterio("id", id);
-                            mostrarUsuarios(usuarioId);
+                            List<Producto> productoId = productoService.getProductoByCriterio("id", id);
+                            mostrarProductos(productoId);
                         } catch (IllegalArgumentException e) {
                             System.out.println("Entrada inválida. El formato del UUID es incorrecto.");
                         }
@@ -480,71 +470,43 @@ public class ConsoleApp {
                     String nombre = scanner.nextLine();
 
                     try {
-                        List<Usuario> usuarioNombre = usuarioService.getUsuarioByCriterio("nombre", nombre);
-                        mostrarUsuarios(usuarioNombre);
+                        List<Producto> productoNombre = productoService.getProductoByCriterio("nombre", nombre);
+                        mostrarProductos(productoNombre);
                     } catch (Exception e) {
-                        System.out.println("Se produjo un error al buscar usuarios por nombre: " + e.getMessage());
+                        System.out.println("Se produjo un error al buscar productos por nombre: " + e.getMessage());
                     }
                     break;
                 case 3:
-                    System.out.println("Introduzca apellido1 a buscar:");
-                    String apellido1 = scanner.nextLine();
+                    System.out.println("Introduzca precio a buscar:");
+                    String precio = scanner.nextLine();
 
                     try {
-                        List<Usuario> usuarioapellido1 = usuarioService.getUsuarioByCriterio("apellido1", apellido1);
-                        mostrarUsuarios(usuarioapellido1);
+                        List<Producto> productoPrecio = productoService.getProductoByCriterio("precio", precio);
+                        mostrarProductos(productoPrecio);
                     } catch (Exception e) {
-                        System.out.println("Se produjo un error al buscar usuarios por apellido1: " + e.getMessage());
+                        System.out.println("Se produjo un error al buscar productos por precio: " + e.getMessage());
                     }
-                    break;
-                case 4:
-                    System.out.println("Introduzca apellido2 a buscar:");
-                    String apellido2 = scanner.nextLine();
-
-                    try {
-                        List<Usuario> usuarioapellido2 = usuarioService.getUsuarioByCriterio("apellido2", apellido2);
-                        mostrarUsuarios(usuarioapellido2);
-                    } catch (Exception e) {
-                        System.out.println("Se produjo un error al buscar usuarios por apellido2: " + e.getMessage());
-                    }
-                    break;
-                case 5:
-                    System.out.println("Introduzca email a buscar:");
-                    String correo = scanner.nextLine();
-
-                    try {
-
-                        if (usuarioService.validarCorreo(correo)) {
-                            List<Usuario> usuarioCorreo = usuarioService.getUsuarioByCriterio("email", correo);
-                            mostrarUsuarios(usuarioCorreo);
-                        } else {
-                            System.out.println("El formato del email es inválido.");
-                        }
-                    } catch (Exception e) {
-                        System.out.println("Se produjo un error al buscar usuarios por email: " + e.getMessage());
-                    }
-
                     break;
                 case 0:
-                    return; // Volver al Menú User
+                    return; // Volver al Menú Product
             }
         }
     }
     private static void getProductoById() {
-        System.out.println("------- Usuario Encontrado -------");
+        System.out.println("------- Producto Encontrado -------");
         try {
             System.out.println("Introduzca id a buscar :");
             String idString = scanner.nextLine();
             UUID id = UUID.fromString(idString);
-            Usuario usuario = usuarioService.getUsuarioById(id);
-            if (usuario != null) {
-                System.out.println(usuario);
+            Producto producto = productoService.getProductoById(id);
+            if (producto != null) {
+                System.out.println(producto);
                 System.out.println("-----------------------------");
             } else {
-                System.out.println("no se encontro usuario con id "+ id);
+                System.out.println("no se encontro producto con id "+ id);
             }
         } catch (Exception e) {
-            System.out.println("Ocurrió un error durante consulta de usuario por id: " + e.getMessage());
+            System.out.println("Ocurrió un error durante consulta de producto por id: " + e.getMessage());
             e.printStackTrace();
         }
     }

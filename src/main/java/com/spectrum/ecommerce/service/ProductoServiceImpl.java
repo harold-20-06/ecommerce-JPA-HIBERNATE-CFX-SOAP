@@ -20,17 +20,21 @@ public class ProductoServiceImpl implements ProductoService {
 
     @Override
     public boolean insertProducto(Producto producto) {
-        return false;
+
+        boolean esExitoso = productoRepository.insertProducto(producto);
+        return esExitoso;
     }
 
     @Override
     public boolean updateProducto(Producto producto) {
-        return false;
-    }
 
+    boolean esExitoso = productoRepository.updateProducto(producto);
+        return esExitoso;
+    }
     @Override
     public boolean deleteProducto(UUID id) {
-        return false;
+        boolean esExitoso = productoRepository.deleteProducto(id);
+        return esExitoso;
     }
 
     @Override
@@ -40,13 +44,16 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
-    public Usuario getProductoById(UUID id) {
-        return null;
+    public Producto getProductoById(UUID id) {
+        Producto productoById = productoRepository.getProductoById(id);
+        return productoById;
     }
 
     @Override
-    public List<Usuario> getProductoByCriterio(String criterio, Object valor) {
-        return null;
+    public List<Producto> getProductoByCriterio(String criterio, Object valor) {
+        List<Producto> productos = productoRepository.getProductoByCriterio(criterio,valor);
+
+        return productos;
     }
 
     @Override

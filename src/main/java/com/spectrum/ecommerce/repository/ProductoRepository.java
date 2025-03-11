@@ -16,9 +16,9 @@ public interface ProductoRepository {
 
     List<Producto> getAllProducto();
 
-    Usuario getUsuarioById(UUID id);
+    Producto getProductoById(UUID id);
 
-    List<Usuario> getProductoByCriterio(String criterio, Object valor);
+    List<Producto> getProductoByCriterio(String criterio, Object valor);
 
 
 }

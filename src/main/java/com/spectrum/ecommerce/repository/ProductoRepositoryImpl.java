@@ -17,19 +17,42 @@ public class ProductoRepositoryImpl implements ProductoRepository{
 
     @Override
     public boolean insertProducto(Producto producto) {
-        return false;
-    }
+        Boolean esExitoso = false;
+        try (EntityManager entity = BaseDatos.getEntityManagerFactory().createEntityManager()) {
+            entity.getTransaction().begin();
+            entity.persist(producto);
+            entity.getTransaction().commit();
+            esExitoso = true;
 
+            return esExitoso;
+        }
+    }
     @Override
     public boolean updateProducto(Producto producto) {
-        return false;
-    }
+        Boolean esExitoso = false;
+        try (EntityManager entity = BaseDatos.getEntityManagerFactory().createEntityManager()) {
+            entity.getTransaction().begin();
+            entity.merge(producto);
+            entity.getTransaction().commit();
+            esExitoso = true;
 
+            return esExitoso;
+        }
+    }
     @Override
     public boolean deleteProducto(UUID id) {
-        return false;
+        boolean esExitoso = false;
+        try (EntityManager entity = BaseDatos.getEntityManagerFactory().createEntityManager()) {
+            entity.getTransaction().begin();
+            Producto producto = entity.find(Producto.class, id);
+            if (producto != null) {
+                entity.remove(producto);
+                entity.getTransaction().commit();
+                esExitoso = true;
+            }
+            return esExitoso;
+        }
     }
-
     @Override
     public List<Producto> getAllProducto() {
 
@@ -47,12 +70,25 @@ public class ProductoRepositoryImpl implements ProductoRepository{
     }
 
     @Override
-    public Usuario getUsuarioById(UUID id) {
+    public Producto getProductoById(UUID id) {
+        try (EntityManager entity = BaseDatos.getEntityManagerFactory().createEntityManager()) {
+            return entity.find(Producto.class, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 
     @Override
-    public List<Usuario> getProductoByCriterio(String criterio, Object valor) {
-        return null;
+    public List<Producto> getProductoByCriterio(String criterio, Object valor) {
+        try (EntityManager entity = BaseDatos.getEntityManagerFactory().createEntityManager()) {
+            Query query = entity.createQuery("SELECT u FROM Producto u WHERE u." + criterio + " = :valor");
+            query.setParameter("valor", valor);
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

@@ -4,6 +4,7 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>com.spectrum.ecommerce.model.Usuario</class>
         <class>com.spectrum.ecommerce.model.Producto</class>
+        <class>com.spectrum.ecommerce.model.Pedido</class>
 
         <!-- Configuración de la conexión a la base de datos -->
         <properties>

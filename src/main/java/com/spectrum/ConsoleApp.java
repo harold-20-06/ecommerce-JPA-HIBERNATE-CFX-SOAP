@@ -8,17 +8,38 @@ import com.spectrum.ecommerce.service.ProductoService;
 import com.spectrum.ecommerce.service.ProductoServiceImpl;
 import com.spectrum.ecommerce.service.UsuarioService;
 import com.spectrum.ecommerce.service.UsuarioServiceImpl;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.se.SeContainer;
+import jakarta.enterprise.inject.se.SeContainerInitializer;
+import jakarta.inject.Inject;
 
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 
+import org.jboss.weld.environment.se.Weld;
+import org.jboss.weld.environment.se.WeldContainer;
+
+@ApplicationScoped
 public class ConsoleApp {
         private static final Scanner scanner = new Scanner(System.in);
-        private static final UsuarioService usuarioService = new UsuarioServiceImpl(new UsuarioRepositoryImpl());
-        private static final ProductoService productoService = new ProductoServiceImpl(new ProductoRepositoryImpl());
-      public static void main(String[] args) {
+        @Inject
+        private  UsuarioService usuarioService;
+        @Inject
+        private  ProductoService productoService;
+
+        public static void main(String[] args) {
+           Weld weld = new Weld();
+            try(WeldContainer container = weld.initialize()) {
+                ConsoleApp app = container.select(ConsoleApp.class).get();
+                app.run();
+            } catch (Exception e) {
+                    e.printStackTrace();
+            }
+       }
+      public void run() {
+
             while (true) {
                 showMainMenu();
                 int option = getOptionFromUser();
@@ -39,7 +60,7 @@ public class ConsoleApp {
             }
         }
 
-        private static void showMainMenu() {
+        private void showMainMenu() {
             System.out.println("------- Menú Principal -------");
             System.out.println("1. Gestionar Usuarios");
             System.out.println("2. Gestionar Productos");
@@ -48,7 +69,7 @@ public class ConsoleApp {
             System.out.println("-----------------------------");
         }
 
-    private static int getOptionFromUser() {
+    private int getOptionFromUser() {
         System.out.print("Ingrese el número de opción: ");
         try {
             int option = scanner.nextInt();
@@ -62,7 +83,7 @@ public class ConsoleApp {
     }
 
 
-    private static void showUserMenu() {
+    private void showUserMenu() {
             while (true) {
                 System.out.println("------- Menú Usuarios -------");
                 System.out.println("1. Crear Usuario");
@@ -97,7 +118,7 @@ public class ConsoleApp {
         }
 
 
-        private static void createUser() {
+        private void createUser() {
             System.out.println("------- Crear Usuario -------");
             try {
                 System.out.println("Ingrese el nombre: ");
@@ -123,7 +144,7 @@ public class ConsoleApp {
             }
         }
 
-        private static void updateUser() {
+        private  void updateUser() {
             System.out.println("------- Actualizar Usuario -------");
 
             try {
@@ -156,7 +177,7 @@ public class ConsoleApp {
             }
         }
 
-        private static void deleteUser() {
+        private  void deleteUser() {
             System.out.println("------- Eliminar Usuario -------");
             try {
                 System.out.println("Ingrese el ID del usuario a eliminar: ");
@@ -177,7 +198,7 @@ public class ConsoleApp {
         }
 
 
-       private static void getAllUser() {
+       private  void getAllUser() {
            System.out.println("------- Lista de Usuarios -------");
            try {
 
@@ -194,7 +215,7 @@ public class ConsoleApp {
            }
        }
 
-       private static void showUserMenuByCriteria() {
+       private void showUserMenuByCriteria() {
            while (true) {
                System.out.println("------- Menú Buscar por Criterio -------");
                System.out.println("1. Buscar por id");
@@ -280,7 +301,7 @@ public class ConsoleApp {
                }
            }
        }
-       private static void getUsuarioById() {
+       private  void getUsuarioById() {
            System.out.println("------- Usuario Encontrado -------");
            try {
                System.out.println("Introduzca id a buscar :");
@@ -298,7 +319,7 @@ public class ConsoleApp {
                e.printStackTrace();
            }
        }
-       private static void mostrarUsuarios(List<Usuario> usuarios) {
+       private  void mostrarUsuarios(List<Usuario> usuarios) {
            if (usuarios.isEmpty()) {
                System.out.println("No se encontraron usuarios.");
            } else {
@@ -312,7 +333,7 @@ public class ConsoleApp {
        }
 
 
-    private static void showProductMenu() {
+    private void showProductMenu() {
         while (true) {
             System.out.println("------- Menú Productos -------");
             System.out.println("1. Crear Producto");
@@ -347,7 +368,7 @@ public class ConsoleApp {
     }
 
 
-    private static void createProduct() {
+    private void createProduct() {
         System.out.println("------- Crear Producto -------");
         try {
             System.out.println("Ingrese el nombre: ");
@@ -371,7 +392,7 @@ public class ConsoleApp {
         }
     }
 
-    private static void updateProduct() {
+    private void updateProduct() {
         System.out.println("------- Actualizar Producto -------");
 
         try {
@@ -400,7 +421,7 @@ public class ConsoleApp {
         }
     }
 
-    private static void deleteProduct() {
+    private void deleteProduct() {
         System.out.println("------- Eliminar Producto -------");
         try {
             System.out.println("Ingrese el ID del producto a eliminar: ");
@@ -419,7 +440,7 @@ public class ConsoleApp {
             e.printStackTrace();
         }
     }
-    private static void getAllProduct() {
+    private void getAllProduct() {
         System.out.println("------- Lista de productos -------");
         try {
 
@@ -436,7 +457,7 @@ public class ConsoleApp {
         }
     }
 
-    private static void showProductMenuByCriteria() {
+    private void showProductMenuByCriteria() {
         while (true) {
             System.out.println("------- Menú Buscar por Criterio -------");
             System.out.println("1. Buscar por id");
@@ -492,7 +513,7 @@ public class ConsoleApp {
             }
         }
     }
-    private static void getProductoById() {
+    private void getProductoById() {
         System.out.println("------- Producto Encontrado -------");
         try {
             System.out.println("Introduzca id a buscar :");
@@ -510,7 +531,7 @@ public class ConsoleApp {
             e.printStackTrace();
         }
     }
-    private static void mostrarProductos(List<Producto> productos) {
+    private void mostrarProductos(List<Producto> productos) {
         if (productos.isEmpty()) {
             System.out.println("No se encontraron productos.");
         } else {
@@ -523,7 +544,7 @@ public class ConsoleApp {
         }
     }
 
-        private static void showPedidoMenu() {
+        private void showPedidoMenu() {
             // Implementar menú de gestión de etiquetas
         }
 

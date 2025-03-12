@@ -3,6 +3,7 @@ package com.spectrum.ecommerce.repository;
 import com.spectrum.ecommerce.model.Producto;
 import com.spectrum.ecommerce.model.Usuario;
 import com.spectrum.ecommerce.utilities.BaseDatos;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 
@@ -10,10 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@ApplicationScoped
 public class ProductoRepositoryImpl implements ProductoRepository{
-
-
-
 
     @Override
     public boolean insertProducto(Producto producto) {

@@ -6,16 +6,18 @@ import com.spectrum.ecommerce.repository.ProductoRepository;
 import com.spectrum.ecommerce.repository.ProductoRepositoryImpl;
 import com.spectrum.ecommerce.repository.UsuarioRepository;
 import com.spectrum.ecommerce.repository.UsuarioRepositoryImpl;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 import java.util.List;
 import java.util.UUID;
 
+@ApplicationScoped
 public class ProductoServiceImpl implements ProductoService {
+    @Inject
+    private ProductoRepository productoRepository;
 
-    private static final ProductoRepository productoRepository = new ProductoRepositoryImpl();
-
-    public ProductoServiceImpl(ProductoRepositoryImpl productoRepository) {
-    }
+    //public ProductoServiceImpl(ProductoRepositoryImpl productoRepository) {}
 
 
     @Override

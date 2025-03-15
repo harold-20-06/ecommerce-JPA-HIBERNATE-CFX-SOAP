@@ -3,6 +3,7 @@ package com.spectrum.ecommerce.repository;
 import com.spectrum.ecommerce.model.Pedido;
 import com.spectrum.ecommerce.model.Usuario;
 import com.spectrum.ecommerce.utilities.BaseDatos;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.Query;
@@ -14,7 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Repository
+//@Repository
+@ApplicationScoped
 public class UsuarioRepositoryImpl implements UsuarioRepository {
 
     @Override
@@ -78,9 +80,9 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
             Query query = entity.createQuery("SELECT u FROM Usuario u");
             listaUsuarios = query.getResultList();
             System.out.println("Usuarios en el repositorio: " + listaUsuarios.size());
-            //for (Usuario usuario : listaUsuarios) {
-            //    usuario.getPedidos().size(); // Carga la colección de pedidos
-            //}
+           // for (Usuario usuario : listaUsuarios) {
+           //     usuario.getPedidos().size(); // Carga la colección de pedidos
+           // }
 
         } catch (Exception e) {
             System.out.println("Error en repository");

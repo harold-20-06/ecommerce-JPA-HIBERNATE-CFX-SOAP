@@ -5,6 +5,8 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -23,14 +25,11 @@ public class Producto {
     @Column(name = "precio", nullable = false)
     private String precio;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "pedido_producto",
-            joinColumns = @JoinColumn(name = "producto_id"),
-            inverseJoinColumns = @JoinColumn(name = "pedido_id")
-    )
+/*
+    @ManyToMany(cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<Pedido> pedidos = new ArrayList<>();
-
+*/
     public Producto(String nombre, String precio) {
         this.nombre = nombre;
         this.precio = precio;

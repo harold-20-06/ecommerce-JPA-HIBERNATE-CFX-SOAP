@@ -1,5 +1,7 @@
 package com.spectrum.ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -32,11 +34,12 @@ public class Usuario {
     @Column(name = "email", nullable = false)
     private String email;
 
-
-//    @OneToMany(mappedBy = "usuario",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    private List<Pedido> pedidos = new ArrayList<>();
-
-
+/*  @TODO: evitar conflictos con la serializacion en rest api con jackson analizar implementar DTOs
+    @OneToMany(mappedBy = "usuario",cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @JsonIgnore
+    private List<Pedido> pedidos = new ArrayList<>();
+*/
     public Usuario(String nombre, String apellido1, String apellido2, String email) {
         this.nombre = nombre;
         this.apellido1 = apellido1;

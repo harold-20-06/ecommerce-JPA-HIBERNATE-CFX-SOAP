@@ -5,6 +5,9 @@ import com.spectrum.ecommerce.model.Producto;
 import com.spectrum.ecommerce.model.Usuario;
 import com.spectrum.ecommerce.service.ProductoService;
 import com.spectrum.ecommerce.service.ProductoServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -18,9 +21,12 @@ public class ProductoController {
     @Inject
     private ProductoService productoService;
 
-
+    @Tag(name = "Productos", description = "API para operaciones relacionadas con los productos")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Obtener todos los productos", description = "Devuelve una lista de todos los productos")
+    @ApiResponse(responseCode = "200", description = "Lista de productos obtenida correctamente")
+    @ApiResponse(responseCode = "500", description = "Error al obtener la lista de productos")
     public Response getAllProductos() {
         try {
             List<Producto> productos = productoService.getAllProducto();
@@ -37,6 +43,24 @@ public class ProductoController {
      @GET
      @Path("/{id}")
      @Produces(MediaType.APPLICATION_JSON)
+        @Operation(
+                summary = "Obtener un producto por ID",
+                description = "Devuelve el producto correspondiente al ID proporcionado",
+                responses = {
+                        @ApiResponse(
+                                responseCode = "200",
+                                description = "Producto encontrado correctamente"
+                        ),
+                        @ApiResponse(
+                                responseCode = "404",
+                                description = "Producto no encontrado"
+                        ),
+                        @ApiResponse(
+                                responseCode = "500",
+                                description = "Error al obtener el producto"
+                        )
+                }
+        )
      public Response getProductoById(@PathParam("id") UUID id) {
         try {
             Producto producto = productoService.getProductoById(id);
@@ -54,6 +78,11 @@ public class ProductoController {
     }
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Crear un producto", description = "Crea un nuevo producto")
+    @ApiResponse(responseCode = "200", description = "Producto creado correctamente")
+    @ApiResponse(responseCode = "500", description = "Error al crear el producto")
+
     public Response createProducto(Producto producto) {
         System.out.println("Creando producto: " + producto);
         try {
@@ -71,7 +100,12 @@ public class ProductoController {
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateUsuario(@PathParam("id") UUID id, Producto producto) {
+    @Operation(summary = "Actualizar un producto", description = "Actualiza un producto existente")
+    @ApiResponse(responseCode = "200", description = "Producto actualizado correctamente")
+    @ApiResponse(responseCode = "404", description = "Producto no encontrado")
+    @ApiResponse(responseCode = "500", description = "Error al actualizar el producto")
+
+    public Response updateProducto(@PathParam("id") UUID id, Producto producto) {
         try {
             Producto existingProducto = productoService.getProductoById(id);
             if (existingProducto == null) {
@@ -93,6 +127,11 @@ public class ProductoController {
 
     @DELETE
     @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Eliminar un producto", description = "Elimina un producto existente")
+    @ApiResponse(responseCode = "200", description = "Producto eliminado correctamente")
+    @ApiResponse(responseCode = "500", description = "Error al eliminar el producto")
+
     public Response deleteProducto(@PathParam("id") UUID id) {
         try {
             productoService.deleteProducto(id);

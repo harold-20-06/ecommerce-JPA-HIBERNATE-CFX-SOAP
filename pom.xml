@@ -47,16 +47,18 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.jboss.weld.se</groupId>
-            <artifactId>weld-se-core</artifactId>
-            <version>6.0.1.Final</version>
-        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/jakarta.enterprise/jakarta.enterprise.cdi-api -->
         <dependency>
             <groupId>jakarta.enterprise</groupId>
             <artifactId>jakarta.enterprise.cdi-api</artifactId>
             <version>4.1.0</version>
-            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.weld.se</groupId>
+            <artifactId>weld-se-core</artifactId>
+            <version>6.0.1.Final</version>
         </dependency>
 
         <!-- Dependencia de PostgreSQL -->
@@ -70,7 +72,7 @@
         <dependency>
             <groupId>jakarta.persistence</groupId>
             <artifactId>jakarta.persistence-api</artifactId>
-            <version>3.2.0</version> <!-- Usa una versión de Jakarta EE compatible -->
+            <version>3.2.0</version>
         </dependency>
 
         <!-- Dependencia de Hibernate con Jakarta -->
@@ -133,8 +135,6 @@
             <artifactId>spring-context</artifactId>
             <version>7.0.0-M3</version>
         </dependency>
-
-
         <!-- Dependencia de Lombok (opcional, para reducir el código repetitivo) -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -142,7 +142,6 @@
             <version>1.18.28</version>
             <scope>provided</scope>
         </dependency>
-
 
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
@@ -161,7 +160,5 @@
             <artifactId>jersey-hk2</artifactId>
             <version>4.0.0-M2</version>
         </dependency>
-
-
     </dependencies>
 </project>

@@ -2,15 +2,9 @@ package com.spectrum;
 
 import com.spectrum.ecommerce.model.Producto;
 import com.spectrum.ecommerce.model.Usuario;
-import com.spectrum.ecommerce.repository.ProductoRepositoryImpl;
-import com.spectrum.ecommerce.repository.UsuarioRepositoryImpl;
 import com.spectrum.ecommerce.service.ProductoService;
-import com.spectrum.ecommerce.service.ProductoServiceImpl;
 import com.spectrum.ecommerce.service.UsuarioService;
-import com.spectrum.ecommerce.service.UsuarioServiceImpl;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.se.SeContainer;
-import jakarta.enterprise.inject.se.SeContainerInitializer;
 import jakarta.inject.Inject;
 
 import java.util.InputMismatchException;
